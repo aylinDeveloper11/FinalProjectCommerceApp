@@ -46,7 +46,7 @@ public class UserService {
 		AuthorityEntity authority = new AuthorityEntity();
 
 		authority.setUsername(user.getUsername());
-		authority.setAuthority("ROLE_USER");
+		authority.setAuthority("ROLE_ADMIN");
 
 		authorityRepository.save(authority);
 		return user;

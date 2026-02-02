@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +21,7 @@ import az.developia.CommerceApp.service.UserProductService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/product")
-@CrossOrigin("*")
+@RequestMapping("/products")
 public class ProductController {
 
 	@Autowired
@@ -40,11 +40,13 @@ public class ProductController {
 		return productService.getById(id);
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/createProduct")
 	public Product createProduct(@Valid @RequestBody ProductDto productDto) {
 		return userProductService.saveProduct(productDto);
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/delete/{id}")
 	public void deleteProduct(@PathVariable Long id) {
 		userProductService.deleteProduct(id);

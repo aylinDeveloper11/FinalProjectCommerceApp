@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +20,6 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/users")
-@CrossOrigin("*")
 public class UserController {
 
 	@Autowired
@@ -36,6 +36,7 @@ public class UserController {
 		return ResponseEntity.ok(Map.of("token", token));
 	}
 
+	@PreAuthorize("isAuthenticated()") // или "hasAnyRole('USER','ADMIN')"
 	@GetMapping("/me")
 	public UserMeDto me() {
 		return userService.me();

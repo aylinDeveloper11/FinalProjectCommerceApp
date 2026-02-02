@@ -67,4 +67,5 @@ public class ReviewService {
     public List<Review> getByUser(Long userId) {
         return reviewRepository.findByUserId(userId);
     }
+    
 }
